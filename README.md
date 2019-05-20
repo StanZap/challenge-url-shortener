@@ -3,10 +3,14 @@
 This is an extremely simple url shortener API powered by Laravel 5. The short links were generated using the php implementation of the awesome [hashids](http://hashids.org/php) library. 
 
 ### Setup
-Go inside the project directory and run:
+You can setup this api project by cloning the repo and in the root folder run:
 ```bash
 $ touch ./database/database.sqlite
 $ docker-compose up -d
+```
+Or you can simply run it as a standalone container
+```bash
+$ docker run -tid -p 8000:8000 --name shortener jrszapata/url-shortener-laravel-5.8
 ```
 
 ### Use
@@ -21,6 +25,5 @@ that should return something like:
 {
   "short_url": "http://localhost:8000/mO"
 }
-
 ```
-Simple. You can get the Top 100 links accessed by calling `/api/top-100-links`
+Simple. Now you should be able to start getting a list of top 100 accessed links by calling `/api/top-100-links`.
