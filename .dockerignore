@@ -1,0 +1,7 @@
+vendor/
+test/
+docker-compose.yml
+phpunit.xml
+docker/
+webpack.mix.js
+.db/
