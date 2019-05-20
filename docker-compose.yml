@@ -3,6 +3,7 @@ services:
 
   # The Application
   app:
+    image: jrszapata/url-shortener-laravel-5.8
     build:
       context: ./
       dockerfile: ./docker/app.dockerfile

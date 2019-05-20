@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y libmcrypt-dev libgmp-dev \
     && pecl install imagick mcrypt-1.0.2;
 
 RUN docker-php-ext-install pdo_mysql zip gmp; \
-    docker-php-ext-enable mcrypt pdo_mysql zip;
+    docker-php-ext-enable mcrypt;
 
 ENV WORKDIR=/var/www
 
@@ -42,10 +42,18 @@ COPY ./ ${WORKDIR}/
 USER root
 
 RUN chgrp -R www-data storage bootstrap/cache; \
-    chmod -R ug+rwx storage bootstrap/cache
+    chmod -R ug+rwx storage bootstrap/cache; \
+    mkdir ./database/db; \
+    touch ./database/db/database.sqlite; \
+    chown -R appuser:appuser ./database/db; \
+    chmod ug+rwx -R ./database/db;
 
 # Autoload classes
 USER appuser
 
-RUN composer dump-autoload
+RUN composer dump-autoload; \
+    php artisan migrate --force; \
+    echo "APP_KEY=" >> .env; \
+    php artisan key:generate
 
+CMD php artisan serve --host=0.0.0.0

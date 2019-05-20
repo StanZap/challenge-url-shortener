@@ -34,7 +34,7 @@ class LinksController extends Controller
             ]);
 
             $link->save();
-            $hashids = new Hashids();
+            $hashids = new Hashids(env('APP_KEY'));
             $link->hash = $hashids->encode($link->id);
             $link->save();
 
@@ -42,12 +42,12 @@ class LinksController extends Controller
                 'short_url' => url($link->hash),
             ];
         } catch (ValidationException $exception) {
-            return response()->json([
+            return response([
                 'error' => [
                     'message' => $exception->getMessage(),
                     'code' => 422
                 ]
-            ]);
+            ], 422);
         }
     }
 
