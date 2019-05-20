@@ -1,10 +1,10 @@
 FROM php:7.2-fpm
 
-RUN apt-get update && apt-get install -y libmcrypt-dev \
+RUN apt-get update && apt-get install -y libmcrypt-dev libgmp-dev \
     mysql-client unzip libmagickwand-dev --no-install-recommends \
     && pecl install imagick mcrypt-1.0.2;
 
-RUN docker-php-ext-install pdo_mysql zip; \
+RUN docker-php-ext-install pdo_mysql zip gmp; \
     docker-php-ext-enable mcrypt pdo_mysql zip;
 
 ENV WORKDIR=/var/www
